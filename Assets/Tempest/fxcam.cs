@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tempest;
 
-public class fxcam : MonoBehaviour
+namespace Tempest
 {
-    // Start is called before the first frame update
-    void Start()
+    
+    public class fxcam : MonoBehaviour
     {
+        // Start is called before the first frame update
+        void Start()
+        {
         
-    }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
+        // Update is called once per frame
+        void Update()
+        {
         
+        }
     }
+    
 }
+
+
