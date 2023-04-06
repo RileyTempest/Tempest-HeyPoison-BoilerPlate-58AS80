@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEditor;
 
 
-
 //public delegate void SampleEventHandler(object sender, SampleEventArgs e);
 public delegate void TempestNavigationHandler();
 //TempestNavigationBuss.derp += () => { };
@@ -14,8 +13,6 @@ namespace Tempest.Trees.Mono
 {
     public class TempestNavigationBuss : MonoBehaviour
     {
-
-        
         //Fields
         private TempestNavigationMono NavigationMono; 
         
@@ -29,7 +26,6 @@ namespace Tempest.Trees.Mono
             CheckFields();
         }
 
-
         //Helpers
         private void CheckFields()
         {
@@ -38,7 +34,6 @@ namespace Tempest.Trees.Mono
                 Debug.LogWarning("Tempest - NavigationMono object/component not populated at this time. ");
             }
         }
-
         private void Acquirefields()
         {
             NavigationMono = GetComponent<TempestNavigationMono>();

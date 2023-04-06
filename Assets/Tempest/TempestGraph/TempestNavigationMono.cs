@@ -4,6 +4,8 @@ using UnityEngine;
 using Tempest;
 using Unity.VisualScripting;
 using UnityEditor;
+using UnityEngine.SceneManagement;
+using XNode;
 
 
 namespace Tempest.Trees.Mono
@@ -11,12 +13,12 @@ namespace Tempest.Trees.Mono
     [Serializable]
     public class TempestNavigationMono : TempestNavigationBuss 
     {
-        
-        
-        
         //Fields
+        [SerializeField] private XNode.SceneGraph SceneGraphComponent;
+        [SerializeField] private XNode.NodeGraph XGraph;
         [SerializeField] private GameObject NodeGOPrefab;
         [SerializeField] private Tempest.Trees.Graph NavigationGraph;
+        
         
         //Globals
         private Transform[] NodeGOs = null;
@@ -28,8 +30,7 @@ namespace Tempest.Trees.Mono
             //TempestNavigationBuss.derp += delegate {  };
             TempestNavigationBuss.derp += HandlerRegenerate;
         }
-
-
+        
         //Unity Messages
         private void Awake()
         {
@@ -77,9 +78,38 @@ namespace Tempest.Trees.Mono
         private void HandlerRegenerate()
         {
             Debug.Log("entered HandlerRgen method in NavMono");
+            
+            //
+            /*
+             * crawl children. names as tags
+             * add to dictionary as keys
+             * "" crawl nodes in XnodeGraph, tag/name/label field
+             * add to same dictionary as keys, handling collisions
+             * value is a struct, an intermediate data container. Serialized Object?
+             * 
+             * 
+             * 
+             */
+            
             CountChildrenForGraphUpdate();
-            SetChildrenWithPrefab();
             DestroyOldChildren();
+
+            SceneGraphComponent = GetComponent<SceneGraph>();
+            XGraph = SceneGraphComponent.graph;
+            NavigationGraph = null; //TODO: Make this whole process more elegant and 'in the background'. 
+            foreach (XNode.Node node in XGraph.nodes)
+            {
+                GameObject GO = Instantiate(NodeGOPrefab, this.transform);
+                GO.name = node.name;
+
+            }
+            
+            
+            
+            //
+            //CountChildrenForGraphUpdate();
+            //SetChildrenWithPrefab();
+            //DestroyOldChildren();
             InitGlobalFields();
         }
     }
