@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public Animator animator;                   // Reference to the animator component.
     public NavMeshAgent agent;                  // Reference to the nav mesh agent component.
-    public SaveData playerSaveData;             // Reference to the save data asset containing the player's starting position.
+    //public SaveData playerSaveData;             // Reference to the save data asset containing the player's starting position.
     public float turnSmoothing = 15f;           // The amount of smoothing applied to the player's turning using spherical interpolation.
     public float speedDampTime = 0.1f;          // The approximate amount of time it takes for the speed parameter to reach its value upon being set.
     public float slowingSpeed = 0.175f;         // The speed the player moves as it reaches close to it's destination.
@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     public float inputHoldDelay = 0.5f;         // How long after reaching an interactable before input is allowed again.
     
 
-    private Interactable currentInteractable;   // The interactable that is currently being headed towards.
+    //private Interactable currentInteractable;   // The interactable that is currently being headed towards.
     private Vector3 destinationPosition;        // The position that is currently being headed towards, this is the interactionLocation of the currentInteractable if it is not null.
     private bool handleInput = true;            // Whether input is currently being handled.
     private WaitForSeconds inputHoldWait;       // The WaitForSeconds used to make the user wait before input is handled again.
@@ -47,12 +47,12 @@ public class PlayerMovement : MonoBehaviour
 
         // Load the starting position from the save data and find the transform from the starting position's name.
         string startingPositionName = "";
-        playerSaveData.Load(startingPositionKey, ref startingPositionName);
-        Transform startingPosition = StartingPosition.FindStartingPosition(startingPositionName);
+        //playerSaveData.Load(startingPositionKey, ref startingPositionName);
+        //Transform startingPosition = StartingPosition.FindStartingPosition(startingPositionName);
 
         // Set the player's position and rotation based on the starting position.
-        transform.position = startingPosition.position;
-        transform.rotation = startingPosition.rotation;
+        //transform.position = startingPosition.position;
+        //transform.rotation = startingPosition.rotation;
 
         // Set the initial destination as the player's current position.
         destinationPosition = transform.position;
@@ -66,7 +66,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void Update()
+    /*private void Update()
     {
         // If the nav mesh agent is currently waiting for a path, do nothing.
         if (agent.pathPending)
@@ -87,10 +87,10 @@ public class PlayerMovement : MonoBehaviour
         
         // Set the animator's Speed parameter based on the (possibly modified) speed that the nav mesh agent wants to move at.
         animator.SetFloat(hashSpeedPara, speed, speedDampTime, Time.deltaTime);
-    }
+    }*/
 
 
-    // This is called when the nav mesh agent is very close to it's destination.
+    /*// This is called when the nav mesh agent is very close to it's destination.
     private void Stopping (out float speed)
     {
         // Stop the nav mesh agent from moving the player.
@@ -115,10 +115,10 @@ public class PlayerMovement : MonoBehaviour
             // Start the WaitForInteraction coroutine so that input is ignored briefly.
             StartCoroutine (WaitForInteraction ());
         }
-    }
+    }*/
 
 
-    // This is called when the nav mesh agent is close to its destination but not so close it's position should snap to it's destination.
+    /*// This is called when the nav mesh agent is close to its destination but not so close it's position should snap to it's destination.
     private void Slowing (out float speed, float distanceToDestination)
     {
         // Although the player will continue to move, it will be controlled manually so stop the nav mesh agent.
@@ -138,7 +138,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Set the speed (for use by the animator) to a value between slowing speed and zero based on the proportional distance.
         speed = Mathf.Lerp(slowingSpeed, 0f, proportionalDistance);
-    }
+    }*/
 
 
     // This is called when the player is moving normally.  In such cases the player is moved by the nav mesh agent, but rotated by this function.
@@ -152,7 +152,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    // This function is called by the EventTrigger on the scene's ground when it is clicked on.
+    /*// This function is called by the EventTrigger on the scene's ground when it is clicked on.
     public void OnGroundClick(BaseEventData data)
     {
         // If the handle input flag is set to false then do nothing.
@@ -176,10 +176,10 @@ public class PlayerMovement : MonoBehaviour
         // Set the destination of the nav mesh agent to the found destination position and start the nav mesh agent going.
         agent.SetDestination(destinationPosition);
         agent.isStopped = false;
-    }
+    }*/
 
 
-    // This function is called by the EventTrigger on an Interactable, the Interactable component is passed into it.
+    /*// This function is called by the EventTrigger on an Interactable, the Interactable component is passed into it.
     public void OnInteractableClick(Interactable interactable)
     {
         // If the handle input flag is set to false then do nothing.
@@ -195,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         // Set the destination of the nav mesh agent to the found destination position and start the nav mesh agent going.
         agent.SetDestination(destinationPosition);
         agent.isStopped = false;
-    }
+    }*/
 
 
     private IEnumerator WaitForInteraction ()
