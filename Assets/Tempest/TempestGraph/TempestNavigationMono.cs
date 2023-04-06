@@ -7,7 +7,7 @@ using Tempest;
 namespace Tempest.Trees.Mono
 {
     [Serializable]
-    public class TempestNavigationMono : MonoBehaviour
+    public class TempestNavigationMono : TempestNavigationBuss
     {
         
         
@@ -27,5 +27,9 @@ namespace Tempest.Trees.Mono
         {
             //throw new NotImplementedException();
         }
+        
+        //
+        
+
     }
 }

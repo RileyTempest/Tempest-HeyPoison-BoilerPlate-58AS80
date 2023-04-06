@@ -19,6 +19,23 @@ namespace Tempest
         {
         
         }
+        
+        
+        // Xx
+        /*
+         *
+         * yeah its a trip huh? What was that moment?
+         * You must have been watching us at some point. Following us.
+         * People split, sure. Not everything was meant to be.
+         * The question is; how vicious was that moment?
+         * What supreme experience could destroy so much?
+         * A punch? A spit? A word? No, something worse.
+         * There are hints. So many hints. I'm good at keeping a secret.
+         * You can't be sure can you? You've ran the simulations but there is always
+         * a nag. a doubt. There lies something powerful. 
+         *
+         * 
+         */
     }
     
 }

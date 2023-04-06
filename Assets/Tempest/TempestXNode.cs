@@ -3,7 +3,7 @@ using XNode;
 
 namespace Tempest
 {
-    public class TempestNode : XNode.Node, ITempestNode //Use this as a diff concrete in Xnode editing. 
+    public class TempestXNode : XNode.Node, ITempestNode //Use this as a diff concrete in Xnode editing. 
     {
         //ITempestNode
         public Transform Transform { get; set; }
