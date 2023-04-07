@@ -70,6 +70,7 @@ namespace Tempest.Trees
     public class TempestGraph : Tempest.Trees.Graph<TempestNode>
     {
         //Ctor
+        public TempestGraph() : base(null, null) { }
         protected TempestGraph(List<TempestNode> _ns, List<Edge> _es) : base(_ns, _es) { }
     }
     

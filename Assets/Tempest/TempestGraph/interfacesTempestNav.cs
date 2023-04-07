@@ -8,5 +8,8 @@ namespace Tempest
     {
         void InitNavigationSystem();
         void RegenTempestGraph();
+        
+        //test
+        void TestGraphPopulation();
     }
 }

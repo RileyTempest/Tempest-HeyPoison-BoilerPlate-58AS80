@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Tempest;
+using UnityEditor.SearchService;
 
 
 //neleex 
@@ -17,17 +18,33 @@ namespace Tempest.Trees.Mono
         [SerializeField] private Tempest.Trees.TempestGraph NavigationGraph;
 
         //Event Handlers
-        private void Handler_01() { }
-        private void Handler_02() { }
-        private void Handler_03() { }
-        
+        private void InitNavMono()
+        {
+            if (NodeGOPrefab == null) throw new MissingReferenceException();
+            
+            NavigationGraph = new TempestGraph(); 
+            Debug.LogWarning("Navigation Graph is empty/default/ctor parameterless", this);
+            SceneGraphComponent = gameObject.GetComponent<XNode.SceneGraph>();
+            XGraph = SceneGraphComponent.graph;
+
+        }
+        private void RegenerateTempestGraph() { }
+
         //Init
         public void InitSubscriptions()
         {
-            TempestNavigationBuss.InitSystem += Handler_01;
-            TempestNavigationBuss.Regenerate += Handler_02;
+            TempestNavigationBuss.TempestGraph_test += InitTempestGraph;
+            TempestNavigationBuss.InitSystem += InitNavMono;
+            TempestNavigationBuss.Regenerate += RegenerateTempestGraph;
         }
         
+        private void InitTempestGraph()
+        {
+            //TODO:
+            Debug.Log("entered InitTempestGraph method", this);
+            
+        }
+
         //Override
         public override void EventRefresh_Resubscribe()
         {

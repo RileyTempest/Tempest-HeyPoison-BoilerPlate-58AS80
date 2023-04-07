@@ -12,7 +12,6 @@ public delegate void TempestNavigationEvent();
 //TempestNavigationBuss.derp += () => { };
 //TempestNavigationBuss.derp += delegate {  };
 
-
 namespace Tempest.Trees.Mono
 {
     public class TempestNavigationBuss : MonoBehaviour, ITempestNavigationHook, ITempestNavigationMenuHandlers
@@ -24,20 +23,19 @@ namespace Tempest.Trees.Mono
         //Events
         protected static TempestNavigationEvent InitSystem;
         protected static TempestNavigationEvent Regenerate;
-      
-        //Unity Messages
-        private void Awake()
-        {
-            Acquirefields();
-            CheckFields();
-        }
-        
+        protected static TempestNavigationEvent TempestGraph_test;
+
         //Init
         private void Init_SelfFirst()
         {
             SysHook = this;
+            MenuHandlers = this;
             InitSystem = delegate {  };
             Regenerate = delegate {  };
+            
+            //tests
+            LoadTest_TempestGraph();
+            
             this.EventRefresh_Resubscribe();
             InitSystem.Invoke();
         }
@@ -49,7 +47,11 @@ namespace Tempest.Trees.Mono
         }
         void ITempestNavigationMenuHandlers.InitNavigationSystem() => Init_SelfFirst();
         void ITempestNavigationMenuHandlers.RegenTempestGraph() => Regenerate.Invoke();
+        void ITempestNavigationMenuHandlers.TestGraphPopulation() => TempestGraph_test.Invoke();
+
         
+        //Helpers - test
+        private void LoadTest_TempestGraph() => TempestGraph_test = delegate {  };
         
         //Below Are just notes from previous implementations 
         

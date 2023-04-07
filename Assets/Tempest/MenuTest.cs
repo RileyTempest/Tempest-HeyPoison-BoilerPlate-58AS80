@@ -20,14 +20,27 @@ public class MenuTest : MonoBehaviour
     public static void MenuHandler_InitSystem()
     {
         //throw new NotImplementedException();
-        ITempestNavigationMenuHandlers handlers = GameObject.FindObjectOfType<TempestNavigationBuss>();
-        handlers.InitNavigationSystem();
+        ITempestNavigationMenuHandlers handler = GameObject.FindObjectOfType<TempestNavigationBuss>();
+        handler.InitNavigationSystem();
     }
 
     [MenuItem("Tempest/Navigation/Regenerate TempestGraph")]
     public static void MenuHandler_RegenTempestGraph()
     {
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        ITempestNavigationMenuHandlers handler = GameObject.FindObjectOfType<TempestNavigationBuss>();
+        handler.RegenTempestGraph();
+    }
+    
+    
+    
+    //test
+    [MenuItem("Tempest/TestGraphPopulation")]
+    public static void MenuHandler_TestGraphPopulation()
+    {
+        //throw new NotImplementedException();
+        ITempestNavigationMenuHandlers handler = GameObject.FindObjectOfType<TempestNavigationBuss>();
+        handler.TestGraphPopulation();
     }
     
 }
