@@ -2,11 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Tempest;
-using Unity.VisualScripting;
-using UnityEditor;
-using UnityEngine.SceneManagement;
 using XNode;
-
 
 namespace Tempest.Trees.Mono
 {
@@ -182,15 +178,14 @@ namespace Tempest.Trees.Mono
 
         private void Handler_CrawlPorts()
         {
+            EdgeList = new List<Edge>();
+            
             SceneGraphComponent = GetComponent<SceneGraph>();
             XGraph = SceneGraphComponent.graph;
             EdgeLookup = new Dictionary<TempestXNode, Edge[]>();
 
             foreach (TempestXNode _n in XGraph.nodes)
             {
-                
-                //
-                
                 List<NodePort> nports = new List<NodePort>();
                 nports.AddRange(_n.Outputs);
                 foreach (NodePort _p in nports)
@@ -201,17 +196,26 @@ namespace Tempest.Trees.Mono
 
                     foreach (NodePort _conn in connections)
                     {
-                        //Debug.Log(_n.name);
-                        //Debug.Log(_conn.fieldName + " " +_conn.node);
-                        
                         Edge _e = new Edge(_n, (TempestXNode)_conn.node);
                         EdgeList.Add(_e);
                     }
                 }
-
-                //EdgeLookup.Add(_n, _edgeList.ToArray());
-                Debug.Log(EdgeList);
+                
+                
+                
                 NavigationGraph = new Graph(null, EdgeList);
+                
+                List<TempestNodeMono> nodeMonos = new List<TempestNodeMono>();
+                nodeMonos.AddRange(GameObject.FindObjectsOfType<TempestNodeMono>());
+
+                foreach (Edge _ed in EdgeList)
+                {
+
+                    Debug.DrawLine(_ed.nodeA.position,
+                        Vector3.zero, Color.magenta, 5.0f);
+                    
+                    
+                }
             }
         }
     }
