@@ -22,7 +22,7 @@ namespace Tempest.Trees.Mono
         public List<TempestNodePayload> Payloads;
         public Dictionary<string, TempestNodePayload> NodeLookup;
         public Dictionary<TempestXNode, Edge[]> EdgeLookup;
-        
+        public List<Edge> EdgeList = new List<Edge>();
         //Globals
         private Transform[] NodeGOs = null;
         
@@ -189,20 +189,29 @@ namespace Tempest.Trees.Mono
             foreach (TempestXNode _n in XGraph.nodes)
             {
                 
+                //
+                
                 List<NodePort> nports = new List<NodePort>();
-                nports.AddRange(_n.Ports);
+                nports.AddRange(_n.Outputs);
                 foreach (NodePort _p in nports)
                 {
                     List<NodePort> connections = new List<NodePort>();
-                    connections = nports[0].GetConnections();
+                    connections = _n.GetOutputPort("output01")
+                        .GetConnections();
 
                     foreach (NodePort _conn in connections)
                     {
-                        Debug.Log(_conn.fieldName + " " +_conn.node);
+                        //Debug.Log(_n.name);
+                        //Debug.Log(_conn.fieldName + " " +_conn.node);
+                        
+                        Edge _e = new Edge(_n, (TempestXNode)_conn.node);
+                        EdgeList.Add(_e);
                     }
                 }
-                
-                //EdgeLookup.Add(_n, new Edge[k]);
+
+                //EdgeLookup.Add(_n, _edgeList.ToArray());
+                Debug.Log(EdgeList);
+                NavigationGraph = new Graph(null, EdgeList);
             }
         }
     }

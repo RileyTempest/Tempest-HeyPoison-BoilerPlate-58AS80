@@ -12,10 +12,15 @@ namespace Tempest.Trees
     [Serializable]
     public class Graph
     {
-        //list of nodes
-        //dictionary lookup for node attributes
-        [SerializeField] private List<Node> nodes = new List<Node>();
-        [SerializeField] private List<Edge> edges = new List<Edge>();
+        //Ctor
+        public Graph(List<TempestXNode> _ns, List<Edge> _es)
+        {
+            nodes = _ns;
+            edges = _es;
+        }
+
+        [SerializeField] private List<TempestXNode> nodes;
+        [SerializeField] private List<Edge> edges;
     }
 
     [Serializable]
@@ -30,7 +35,20 @@ namespace Tempest.Trees
     [Serializable]
     public class Edge
     {
-        [SerializeField] private Node[] nodes = new Node[2];
+        //Ctor
+        public Edge(TempestXNode _nodeA, TempestXNode _nodeB)
+        {
+            nodeA = _nodeA;
+            nodeB = _nodeB;
+        }
+        
+        //Fields - testing
+        [SerializeField] public TempestXNode nodeA;
+        [SerializeField] public TempestXNode nodeB;
+        
+        
+        //
+        //[SerializeField] private Node[] nodes = new Node[2];
     }
 }
 
