@@ -37,14 +37,10 @@ namespace Tempest
 
         public override object GetValue(NodePort port)
         {
-        
-        
-            //TODO: What is a line but a dot, smeared. Connect the dots. 
-            Debug.Log("TODO: AH FUCK we have to crawl the outputs to make edges. Shit. What is a line but a  dot, smeared?");
-            
-            
-          
-            
+ 
+            //Debug.Log(port);
+            //Debug.Log(port.Connection.ValueType);
+
             return null;
         }
     }

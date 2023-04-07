@@ -188,22 +188,21 @@ namespace Tempest.Trees.Mono
 
             foreach (TempestXNode _n in XGraph.nodes)
             {
-                int k = 0;
-                //Debug.Log(_n.output01);
                 
                 List<NodePort> nports = new List<NodePort>();
-                nports.AddRange(_n.Outputs);
+                nports.AddRange(_n.Ports);
                 foreach (NodePort _p in nports)
                 {
-                    _p.GetConnections();
-                    Debug.Log(_p.node + " the same as " + _n.name);
-                    if (_p.IsConnected)
+                    List<NodePort> connections = new List<NodePort>();
+                    connections = nports[0].GetConnections();
+
+                    foreach (NodePort _conn in connections)
                     {
-                        Debug.Log(_p + " is connected" );
+                        Debug.Log(_conn.fieldName + " " +_conn.node);
                     }
                 }
                 
-                EdgeLookup.Add(_n, new Edge[k]);
+                //EdgeLookup.Add(_n, new Edge[k]);
             }
         }
     }
