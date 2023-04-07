@@ -4,12 +4,8 @@ using XNode;
 
 namespace Tempest
 {
-    public class TempestXNode : XNode.Node, ITempestNode //Use this as a diff concrete in Xnode editing. 
+    public class TempestXNode : XNode.Node //Use this as a diff concrete in Xnode editing. 
     {
-        //ITempestNode
-        public Transform Transform { get; set; } //TODO: wat? for Review
-        public bool hasPlayerRB { get; set; }
-
         //XNode
         public XNode.Node xNode { get; }
 
@@ -17,8 +13,8 @@ namespace Tempest
         {
             get
             {
-                m_payload = new TempestNodePayload();
-
+                if (m_payload.node == null) m_payload = new TempestNodePayload(); 
+                
                 m_payload.matchLabel = this.name;
                 m_payload.node = this;
 
@@ -26,20 +22,10 @@ namespace Tempest
             }
             set //This is dangerous lul. not clean or secure. just for testing TODO:
             {
-                if (m_payload.Transform == null)
-                {
-                    m_payload = new TempestNodePayload();
-
-                    m_payload.matchLabel = this.name;
-                    m_payload.node = this;
-                    m_payload.Transform = value.Transform;
-                    m_payload.worldPOS = value.worldPOS;
-                }
-                else
-                {
-                    m_payload.Transform = value.Transform;
-                    m_payload.worldPOS = value.worldPOS;
-                }
+                if (value.matchLabel != payload.matchLabel) return;
+                
+                //m_payload.Transform = value.Transform;
+                m_payload.worldPOS = value.worldPOS;
             }
         }
         private TempestNodePayload m_payload;
@@ -57,25 +43,10 @@ namespace Tempest
             Debug.Log("TODO: AH FUCK we have to crawl the outputs to make edges. Shit. What is a line but a  dot, smeared?");
             return null;
         }
-
-    }
-    
-    public interface ITempestNode
-    {
-        //Identity Data
-        public Transform Transform { get; }
-        
-        //Relational Data - Actors/Agents
-        public bool hasPlayerRB { get; }
-        
-        
     }
 
     //TODO: write out transform positions. 
     //Setup with nodeX, save to SO, load from SO with static command...look up flags/attributes
-    public class TempestGraph : XNode.SceneGraph
-    {
-        
-    }
-    
+    public class TempestGraph : XNode.SceneGraph { }
+
 }

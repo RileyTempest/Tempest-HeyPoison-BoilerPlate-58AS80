@@ -10,7 +10,8 @@ using Tempest;
 
 namespace Tempest.Trees
 {
-    public struct TempestNodePayload
+    [Serializable]
+    public class TempestNodePayload
     {
         //XNode Refs
         public TempestXNode node
@@ -31,7 +32,7 @@ namespace Tempest.Trees
         private TempestXNode m_node;
         
         //Scene Refs
-        public Transform Transform;
+        //public Transform Transform;
         
         //Copy Value
         public string matchLabel;
@@ -39,6 +40,12 @@ namespace Tempest.Trees
 
         //Properties
         public IEnumerable<NodePort> ports => node.Ports;
+        
+        //Methods
+        public void SetWorldPOS(Vector3 _v3)
+        {
+            worldPOS = _v3;
+        }
         
         /* Xx
          *

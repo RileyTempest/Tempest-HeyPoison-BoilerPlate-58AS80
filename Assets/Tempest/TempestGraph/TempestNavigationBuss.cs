@@ -18,6 +18,7 @@ namespace Tempest.Trees.Mono
         
         //Events
         public static TempestNavigationHandler derp;
+        public static TempestNavigationHandler SetTransforms;
         
         //Unity Messages
         private void Awake()
@@ -40,6 +41,17 @@ namespace Tempest.Trees.Mono
         }
         
         //Menu Commands
+        [ContextMenu("Tempest/Pull Position Data to XNode")]
+        public void TempestNodes_PositionData()
+        {
+            Acquirefields();
+            CheckFields();
+            
+            derp = delegate {  };
+            NavigationMono.InitSubscriptions();
+            SetTransforms.Invoke();
+        }
+        
         [ContextMenu("Tempest/Regenerate TempestNodes from Graph")]
         public void TempestNodes_RegenFromXNodeGraph()
         {
@@ -52,8 +64,8 @@ namespace Tempest.Trees.Mono
             Acquirefields();
             CheckFields();
             
+            derp = delegate {  };
             NavigationMono.InitSubscriptions();
-            
             derp.Invoke();
         
         }
