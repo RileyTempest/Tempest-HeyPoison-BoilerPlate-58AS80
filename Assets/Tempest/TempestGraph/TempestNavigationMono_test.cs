@@ -18,8 +18,8 @@ namespace Tempest.Trees.Mono
         
         public List<TempestNodePayload> Payloads;
         public Dictionary<string, TempestNodePayload> NodeLookup;
-        public Dictionary<TempestXNode, Edge[]> EdgeLookup;
-        public List<Edge> EdgeList = new List<Edge>();
+        public Dictionary<TempestXNode, XEdge[]> EdgeLookup;
+        public List<XEdge> EdgeList = new List<XEdge>();
         
         //Globals
         private Transform[] NodeGOs = null;
@@ -178,11 +178,11 @@ namespace Tempest.Trees.Mono
         }
         private void Handler_CrawlPorts()
         {
-            EdgeList = new List<Edge>();
+            EdgeList = new List<XEdge>();
             
             SceneGraphComponent = GetComponent<SceneGraph>();
             XGraph = SceneGraphComponent.graph;
-            EdgeLookup = new Dictionary<TempestXNode, Edge[]>();
+            EdgeLookup = new Dictionary<TempestXNode, XEdge[]>();
 
             foreach (TempestXNode _n in XGraph.nodes)
             {
@@ -208,7 +208,7 @@ namespace Tempest.Trees.Mono
                 List<TempestNodeMono> nodeMonos = new List<TempestNodeMono>();
                 nodeMonos.AddRange(GameObject.FindObjectsOfType<TempestNodeMono>());
 
-                foreach (Edge _ed in EdgeList)
+                foreach (XEdge _ed in EdgeList)
                 {
 
                     //Debug.DrawLine(_ed.nodeA.position,

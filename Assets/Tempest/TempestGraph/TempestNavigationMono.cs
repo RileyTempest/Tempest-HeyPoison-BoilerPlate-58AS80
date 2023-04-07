@@ -18,6 +18,7 @@ namespace Tempest.Trees.Mono
         [SerializeField] private Tempest.TempestGraph navigationGraph;
 
         private IGraphFuncs _graphFuncs => navigationGraph;
+        private string portFieldName = "output01";
 
         //Event Handlers
         private void InitNavMono()
@@ -50,12 +51,24 @@ namespace Tempest.Trees.Mono
                 AcquireEdges());*/
             
             //running tests
-            Debug.Log(
-                AcquireXEdgesFromSingleNode(XGraph.nodes[0], "output01")[0].nodeA + "<A B>" +
-                AcquireXEdgesFromSingleNode(XGraph.nodes[0], "output01")[0].nodeB + " 2) " +
-                AcquireXEdgesFromSingleNode(XGraph.nodes[0], "output01")[1].nodeA + "<A B>" +
-                AcquireXEdgesFromSingleNode(XGraph.nodes[0], "output01")[1].nodeB);
-
+            navigationGraph = new TempestGraph(new List<XNode.Node>()
+            {
+                XGraph.nodes[0]
+            }, 
+                AcquireXEdgesFromSingleNode(XGraph.nodes[0], portFieldName)
+                );
+            
+            
+            //Proof of Edges inside of TempestNodes, given by reference to TempestXNode. 
+            foreach (KeyValuePair<string, TempestNode> _pair in GenerateNodeLookup(XGraph.nodes))
+            {
+                for (int i = 0; i < _pair.Value.NodeAttributes.edges.Count; i++)
+                {
+                    Debug.Log(_pair.Value.NodeAttributes.edges[i].nodeA + "<A B> " + _pair.Value.NodeAttributes.edges[i].nodeB);   
+                }
+            }
+            
+            //
         }
         
         //Helpers - graph test
@@ -71,10 +84,9 @@ namespace Tempest.Trees.Mono
             
             return returnList;
         }
-
-        private List<Edge> AcquireEdges(IGraphFuncs _graphFuncs)
+        private List<XEdge> AcquireEdges(IGraphFuncs _graphFuncs)
         {
-            List<Edge> returnList = new List<Edge>();
+            List<XEdge> returnList = new List<XEdge>();
             
             //crawl ports
             //etc...
@@ -82,6 +94,20 @@ namespace Tempest.Trees.Mono
             return returnList;
         }
 
+
+        private Dictionary<string, TempestNode> GenerateNodeLookup(List<XNode.Node> _nodes)
+        {
+            Dictionary<string, TempestNode> returnlist = new Dictionary<string, TempestNode>();
+
+            foreach (XNode.Node _n in _nodes)
+            {
+                returnlist.Add(_n.name, 
+                    new TempestNode(AcquireXEdgesFromSingleNode(_n, portFieldName), 
+                        (TempestXNode)_n));
+            }
+            
+            return returnlist;
+        }
         private List<XEdge> AcquireXEdgesFromSingleNode(XNode.Node _node, string _outpuFieldName)
         {
             List<XEdge> returnList = new List<XEdge>();
@@ -91,7 +117,6 @@ namespace Tempest.Trees.Mono
 
             foreach (NodePort _portal in portList)
             {
-                //Debug.Log(_portal.node.name);
                 returnList.Add(new XEdge(_node, _portal.node));
             }
             

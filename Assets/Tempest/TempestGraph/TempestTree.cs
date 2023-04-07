@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Numerics;
 using Tempest;
 using Tempest.Trees;
+using Unity.VisualScripting;
+using UnityEngine;
+using Vector3 = System.Numerics.Vector3;
+
 //using UnityEngine; //DO NOT USE!!
 // using XNode; // Try not to use...
 
@@ -13,14 +16,20 @@ namespace Tempest.Trees
         where TNode : Node
     {
         //Ctor
-        public Graph(List<TNode> _ns, List<Edge> _es)
+        /*public Graph(List<TNode> _ns, List<Edge> _es)
         {
             nodes = _ns;
             edges = _es;
+        }*/
+        public Graph(List<XNode.Node> _ns, List<XEdge> _es)
+        {
+            xNodes = _ns;
+            xEdges = _es;
         }
 
-        private List<TNode> nodes;
-        private List<Edge> edges;
+        [SerializeField] private List<TNode> nodes;
+        [SerializeField] private List<XNode.Node> xNodes;
+        [SerializeField] private List<XEdge> xEdges;
 
         //ITempestGraph
         object IGraphFuncs.CopyToSerializedObject()
@@ -33,20 +42,16 @@ namespace Tempest.Trees
     public class Node
     {
         //Ctor
-        public Node(Edge[] _edges)
+        public Node(List<XEdge> _xedges)
         {
-            edges = _edges;
-        }
-        public Node(List<Edge> _edges)
-        {
-            edges = _edges.ToArray();
+            xedges = _xedges.ToArray();
         }
         
-        private Edge[] edges;
+        private XEdge[] xedges;
     }
 
-    [Serializable]
-    public class Edge
+    //[Serializable]
+    /*public class Edge
     {
         //Ctor
         public Edge(TempestNode _nodeA, TempestNode _nodeB)
@@ -58,48 +63,54 @@ namespace Tempest.Trees
         //Fields
         public TempestNode nodeA;
         public TempestNode nodeB;
-    }
+    }*/
 }
 
 namespace Tempest
 {
+    [Serializable]
     public class TempestGraph : Tempest.Trees.Graph<TempestNode>
     {
         //Ctor
         public TempestGraph() : base(null, null) { }
-        public TempestGraph(List<TempestNode> _ns, List<Edge> _es) : base(_ns, _es) { }
+        public TempestGraph(List<XNode.Node> _ns, List<XEdge> _es) : base(_ns, _es) { }
+        
+        
     }
     
     public class TempestNode : Node, ITempestNode
     {
+        //TODO: further encapsulate Ctor by providing XEdges from TempestXNode
+        // eg :base(_xNode.GetEdges)
         //Ctor
-        public TempestNode(TempestXNode _xNode, 
-            TempestNodeMono _nodeMono, 
-            NodeCtorEdge _init, 
-            string _matchlabel) : base(new Edge[(int)_init])
+        public TempestNode(List<XEdge> _xedg, TempestXNode _xNode) : base(_xedg)
         {
-            matchLabel = _matchlabel;
             XNode = _xNode;
-            NodeMono = _nodeMono;
-        }
-        public TempestNode(TempestXNode _xNode, 
-            TempestNodeMono _nodeMono, 
-            Edge[] _edges, 
-            string _matchlabel) : base(_edges)
-        {
-            matchLabel = _matchlabel;
-            XNode = _xNode;
-            NodeMono = _nodeMono;
+            handler = this;
+            NodeAttributes = new TempestNodeAttributes();
+            NodeAttributes.matchLabel = _xNode.name;
+            NodeAttributes.edges = _xedg;
+            Debug.LogWarning("Advisory: TempestNode still needs to ingest NodeMono");
         }
 
         //TempestNode Fields
-        public string matchLabel { get; private set; }
+        public string matchLabel => NodeAttributes.matchLabel;
+        public readonly TempestNodeAttributes NodeAttributes; 
+        /*
+        //public string matchLabel;
+        //public Vector3 worldPOS;
+        //public List<Tempest.XEdge> edges;
+        //public Vector3[] adjacentPOS;
+        */
         
         //XNode Fields
         private TempestXNode XNode;
         
         //MonoScene Fields
         private TempestNodeMono NodeMono;
+        
+        //Interface
+        private ITempestNode handler;
         
         //ITempestNode
         bool ITempestNode.IsValid()
@@ -110,11 +121,13 @@ namespace Tempest
         {
             throw new NotImplementedException();
         }
-        void ITempestNode.Ingest_NodeMono()
+        void ITempestNode.Ingest_NodeMono(TempestNodeMono _nm)
         {
             throw new NotImplementedException();
+            NodeMono = _nm;
+            Debug.LogWarning("AdvisoryClear: NodeMono has been ingested");
         }
-
+        
         TempestNodeAttributes ITempestNode.RegenerateNodeAttributes(ref TempestXNode _xn, ref TempestNodeMono _nm)
         {
             throw new NotImplementedException();
@@ -153,7 +166,7 @@ namespace Tempest
         bool IsValid(); //TODO: try catch?
 
         void Ingest_XNode();
-        void Ingest_NodeMono();
+        void Ingest_NodeMono(TempestNodeMono _nm);
 
         TempestNodeAttributes RegenerateNodeAttributes(ref TempestXNode _xn,
             ref TempestNodeMono _nm);
@@ -163,14 +176,14 @@ namespace Tempest
         where TNode : Node
     {
         private List<TNode> nodes;
-        private List<Edge> edges;
+        private List<XEdge> edges;
     }
     
     public struct TempestNodeAttributes
     {
         public string matchLabel;
         public Vector3 worldPOS;
-        public List<Tempest.Trees.Edge> edges;
+        public List<Tempest.XEdge> edges;
         public Vector3[] adjacentPOS;
     }
 
