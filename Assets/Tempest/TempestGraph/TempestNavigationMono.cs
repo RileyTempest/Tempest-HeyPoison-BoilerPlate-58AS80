@@ -15,7 +15,7 @@ namespace Tempest.Trees.Mono
         [SerializeField] private XNode.SceneGraph SceneGraphComponent;
         [SerializeField] private XNode.NodeGraph XGraph;
         [SerializeField] private GameObject NodeGOPrefab;
-        [SerializeField] private Tempest.Trees.Graph NavigationGraph;
+        [SerializeField] private Tempest.Trees.TempestGraph NavigationGraph;
         
         public List<TempestNodePayload> Payloads;
         public Dictionary<string, TempestNodePayload> NodeLookup;
@@ -198,14 +198,14 @@ namespace Tempest.Trees.Mono
 
                     foreach (NodePort _conn in connections)
                     {
-                        Edge _e = new Edge(_n, (TempestXNode)_conn.node);
-                        EdgeList.Add(_e);
+                        //Edge _e = new Edge(_n, (TempestXNode)_conn.node);
+                        //EdgeList.Add(_e);
                     }
                 }
                 
                 
                 
-                NavigationGraph = new Graph(null, EdgeList);
+                //NavigationGraph = new Graph(null, EdgeList);
                 
                 List<TempestNodeMono> nodeMonos = new List<TempestNodeMono>();
                 nodeMonos.AddRange(GameObject.FindObjectsOfType<TempestNodeMono>());
@@ -213,8 +213,8 @@ namespace Tempest.Trees.Mono
                 foreach (Edge _ed in EdgeList)
                 {
 
-                    Debug.DrawLine(_ed.nodeA.position,
-                        Vector3.zero, Color.magenta, 5.0f);
+                    //Debug.DrawLine(_ed.nodeA.position,
+                      //  Vector3.zero, Color.magenta, 5.0f);
                     
                     
                 }
