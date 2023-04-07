@@ -21,6 +21,7 @@ namespace Tempest.Trees.Mono
         
         public List<TempestNodePayload> Payloads;
         public Dictionary<string, TempestNodePayload> NodeLookup;
+        public Dictionary<TempestXNode, Edge[]> EdgeLookup;
         
         //Globals
         private Transform[] NodeGOs = null;
@@ -28,8 +29,9 @@ namespace Tempest.Trees.Mono
         //Events/Subs
         public void InitSubscriptions()
         {
-            TempestNavigationBuss.SetTransforms += SetPositionsBackToXNode;
-            TempestNavigationBuss.derp += HandlerRegenerate;
+            TempestNavigationBuss.SetTransforms += Handler_PullTransformData;
+            TempestNavigationBuss.Regenerate += Handler_Regenerate;
+            TempestNavigationBuss.CrawlPorts += Handler_CrawlPorts;
         }
         
         //Unity Messages
@@ -76,7 +78,7 @@ namespace Tempest.Trees.Mono
         }
 
         //Helper - EventHandlers
-        private void SetPositionsBackToXNode()
+        private void Handler_PullTransformData()
         {
             //update payloads
             SceneGraphComponent = GetComponent<SceneGraph>();
@@ -120,8 +122,7 @@ namespace Tempest.Trees.Mono
                 }
             }
         }
-        
-        private void HandlerRegenerate()
+        private void Handler_Regenerate()
         {
             Debug.Log("entered HandlerRgen method in NavMono");
             
@@ -177,6 +178,33 @@ namespace Tempest.Trees.Mono
                 
             }
             
+        }
+
+        private void Handler_CrawlPorts()
+        {
+            SceneGraphComponent = GetComponent<SceneGraph>();
+            XGraph = SceneGraphComponent.graph;
+            EdgeLookup = new Dictionary<TempestXNode, Edge[]>();
+
+            foreach (TempestXNode _n in XGraph.nodes)
+            {
+                int k = 0;
+                //Debug.Log(_n.output01);
+                
+                List<NodePort> nports = new List<NodePort>();
+                nports.AddRange(_n.Outputs);
+                foreach (NodePort _p in nports)
+                {
+                    _p.GetConnections();
+                    Debug.Log(_p.node + " the same as " + _n.name);
+                    if (_p.IsConnected)
+                    {
+                        Debug.Log(_p + " is connected" );
+                    }
+                }
+                
+                EdgeLookup.Add(_n, new Edge[k]);
+            }
         }
     }
 }

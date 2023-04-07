@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using Tempest;
+using Tempest.Trees;
 using UnityEngine;
 using UnityEditor;
 
@@ -17,8 +20,9 @@ namespace Tempest.Trees.Mono
         private TempestNavigationMono NavigationMono; 
         
         //Events
-        public static TempestNavigationHandler derp;
+        public static TempestNavigationHandler Regenerate;
         public static TempestNavigationHandler SetTransforms;
+        public static TempestNavigationHandler CrawlPorts;
         
         //Unity Messages
         private void Awake()
@@ -47,7 +51,7 @@ namespace Tempest.Trees.Mono
             Acquirefields();
             CheckFields();
             
-            derp = delegate {  };
+            Regenerate = delegate {  };
             NavigationMono.InitSubscriptions();
             SetTransforms.Invoke();
         }
@@ -64,10 +68,21 @@ namespace Tempest.Trees.Mono
             Acquirefields();
             CheckFields();
             
-            derp = delegate {  };
+            Regenerate = delegate {  };
             NavigationMono.InitSubscriptions();
-            derp.Invoke();
+            Regenerate.Invoke();
         
+        }
+
+        [ContextMenu("Tempest/Crawl ports gen edges")]
+        public void TempestNodes_CrawlPortsGenerateEdges()
+        {
+            Acquirefields();
+            CheckFields();
+            
+            CrawlPorts = delegate {  };
+            NavigationMono.InitSubscriptions();
+            CrawlPorts.Invoke();
         }
     }
 }

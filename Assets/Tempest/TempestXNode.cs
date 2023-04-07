@@ -33,20 +33,27 @@ namespace Tempest
         //XNode Fields //TODO: split into diff classes?
         
         [Input] public float input01;
-        [Input] public float input02;
         [Output] public float output01;
-        [Output] public float output02;
 
         public override object GetValue(NodePort port)
         {
+        
+        
             //TODO: What is a line but a dot, smeared. Connect the dots. 
             Debug.Log("TODO: AH FUCK we have to crawl the outputs to make edges. Shit. What is a line but a  dot, smeared?");
+            
+            
+          
+            
             return null;
         }
     }
 
     //TODO: write out transform positions. 
     //Setup with nodeX, save to SO, load from SO with static command...look up flags/attributes
-    public class TempestGraph : XNode.SceneGraph { }
+    public class TempestGraph : XNode.SceneGraph {
+    
+    
+     }
 
 }
