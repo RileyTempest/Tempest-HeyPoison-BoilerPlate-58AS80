@@ -1564,7 +1564,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1041956574}
   - component: {fileID: 1041956573}
-  - component: {fileID: 1041956572}
+  - component: {fileID: 1041956575}
   m_Layer: 0
   m_Name: _TempestNavigation
   m_TagString: Untagged
@@ -1572,63 +1572,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1041956572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041956571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67614a86abdf43f9a140ffc3a1a129f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SceneGraphComponent: {fileID: 1041956573}
-  XGraph: {fileID: 933650068}
-  NodeGOPrefab: {fileID: 1243868922860983273, guid: 7a971d189070b42439f3c1dbf1bf3e55,
-    type: 3}
-  NavigationGraph:
-    nodes: []
-    edges:
-    - nodeA: {fileID: 2084886575}
-      nodeB: {fileID: 1591247327}
-    - nodeA: {fileID: 2084886575}
-      nodeB: {fileID: 940249170}
-    - nodeA: {fileID: 1392672656}
-      nodeB: {fileID: 2084886575}
-    - nodeA: {fileID: 1392672656}
-      nodeB: {fileID: 1261660713}
-    - nodeA: {fileID: 1591247327}
-      nodeB: {fileID: 940249170}
-    - nodeA: {fileID: 1261660713}
-      nodeB: {fileID: 940249170}
-    - nodeA: {fileID: 1261660713}
-      nodeB: {fileID: 2084886575}
-  Payloads:
-  - matchLabel: 01-3oigh
-    worldPOS: {x: 0, y: 0, z: 10.106558}
-  - matchLabel: 00-38fh
-    worldPOS: {x: -5.1323333, y: 0, z: 0}
-  - matchLabel: 02-c9wj
-    worldPOS: {x: 5.2576666, y: 0, z: 0}
-  - matchLabel: 03-9ifbg
-    worldPOS: {x: 0, y: 0, z: -5.813443}
-  EdgeList:
-  - nodeA: {fileID: 2084886575}
-    nodeB: {fileID: 1591247327}
-  - nodeA: {fileID: 2084886575}
-    nodeB: {fileID: 940249170}
-  - nodeA: {fileID: 1392672656}
-    nodeB: {fileID: 2084886575}
-  - nodeA: {fileID: 1392672656}
-    nodeB: {fileID: 1261660713}
-  - nodeA: {fileID: 1591247327}
-    nodeB: {fileID: 940249170}
-  - nodeA: {fileID: 1261660713}
-    nodeB: {fileID: 940249170}
-  - nodeA: {fileID: 1261660713}
-    nodeB: {fileID: 2084886575}
 --- !u!114 &1041956573
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1664,6 +1607,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1041956575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041956571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeea246ac8674e61a291b15dccc516f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneGraphComponent: {fileID: 0}
+  XGraph: {fileID: 0}
+  NodeGOPrefab: {fileID: 1243868922860983273, guid: 7a971d189070b42439f3c1dbf1bf3e55,
+    type: 3}
 --- !u!1001 &1053554071
 PrefabInstance:
   m_ObjectHideFlags: 0
