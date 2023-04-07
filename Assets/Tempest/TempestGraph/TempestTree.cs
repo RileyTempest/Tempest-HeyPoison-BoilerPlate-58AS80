@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Tempest;
-
+using Tempest.Trees;
 //using UnityEngine; //DO NOT USE!!
 // using XNode; // Try not to use...
 
 namespace Tempest.Trees
 {
     [Serializable]
-    public class Graph<TNode> : ITempestGraph
+    public class Graph<TNode> : IGraphFuncs
         where TNode : Node
     {
         //Ctor
@@ -23,11 +23,7 @@ namespace Tempest.Trees
         private List<Edge> edges;
 
         //ITempestGraph
-        void ITempestGraph.RegenerateTempestGraph()
-        {
-            throw new NotImplementedException();
-        }
-        object ITempestGraph.CopyToSerializedObject()
+        object IGraphFuncs.CopyToSerializedObject()
         {
             throw new NotImplementedException();
         }
@@ -65,13 +61,13 @@ namespace Tempest.Trees
     }
 }
 
-namespace Tempest.Trees
+namespace Tempest
 {
     public class TempestGraph : Tempest.Trees.Graph<TempestNode>
     {
         //Ctor
         public TempestGraph() : base(null, null) { }
-        protected TempestGraph(List<TempestNode> _ns, List<Edge> _es) : base(_ns, _es) { }
+        public TempestGraph(List<TempestNode> _ns, List<Edge> _es) : base(_ns, _es) { }
     }
     
     public class TempestNode : Node, ITempestNode
@@ -122,12 +118,33 @@ namespace Tempest.Trees
         TempestNodeAttributes ITempestNode.RegenerateNodeAttributes(ref TempestXNode _xn, ref TempestNodeMono _nm)
         {
             throw new NotImplementedException();
+            
+            //much the same routines as InitTempestGraph in TempestNavigationMono
+            
+            //IsValid
+            //IngestXNode
+            //IngestNodeMono
         }
     }
 
-    public interface ITempestGraph
+    [Serializable]
+    public class XEdge
     {
-        void RegenerateTempestGraph();
+        //Ctor
+        public XEdge(XNode.Node _nodeA, XNode.Node _nodeB)
+        {
+            nodeA = _nodeA;
+            nodeB = _nodeB;
+        }
+        
+        //Fields
+        public XNode.Node nodeA;
+        public XNode.Node nodeB;
+    }
+    public interface IGraphFuncs
+    {
+        //Define methods for deliverables here
+        
         object CopyToSerializedObject();
     }
     

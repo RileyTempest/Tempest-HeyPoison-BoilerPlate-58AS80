@@ -14,7 +14,7 @@ namespace Tempest.Trees.Mono
         [SerializeField] private XNode.SceneGraph SceneGraphComponent;
         [SerializeField] private XNode.NodeGraph XGraph;
         [SerializeField] private GameObject NodeGOPrefab;
-        [SerializeField] private Tempest.Trees.TempestGraph NavigationGraph;
+        [SerializeField] private Tempest.TempestGraph navigationGraph;
         
         public List<TempestNodePayload> Payloads;
         public Dictionary<string, TempestNodePayload> NodeLookup;
@@ -83,7 +83,7 @@ namespace Tempest.Trees.Mono
             Payloads = new List<TempestNodePayload>();
             foreach (TempestXNode node in XGraph.nodes) //meh fix later
             {
-                Payloads.Add(node.payload);
+                //Payloads.Add(node.payload);
             }
 
             NodeLookup = new Dictionary<string, TempestNodePayload>();
@@ -111,10 +111,10 @@ namespace Tempest.Trees.Mono
                 {
                     foreach (TempestXNode nodey in XGraph.nodes)
                     {
-                        if (nodey.payload.matchLabel == nodemono.Payload.matchLabel)
+                        /*if (nodey.payload.matchLabel == nodemono.Payload.matchLabel)
                         {
                             nodey.payload.worldPOS = nodemono.Payload.worldPOS;
-                        }
+                        }*/
                     }
                 }
             }
@@ -129,7 +129,7 @@ namespace Tempest.Trees.Mono
             Payloads = new List<TempestNodePayload>();
             foreach (TempestXNode node in XGraph.nodes) //meh fix later
             {
-                Payloads.Add(node.payload);
+                //Payloads.Add(node.payload);
             }
 
             NodeLookup = new Dictionary<string, TempestNodePayload>();
@@ -156,7 +156,7 @@ namespace Tempest.Trees.Mono
                     //push back to XNode payload
                     foreach (TempestXNode node in XGraph.nodes)
                     {
-                        node.payload = NodeLookup[GONode.Payload.matchLabel];
+                        //node.payload = NodeLookup[GONode.Payload.matchLabel];
                     }
                     
                 } else Debug.Log("matchLable not found in nodelookup. prolly extra Node in Scene -->v" + " " + GONode.name);

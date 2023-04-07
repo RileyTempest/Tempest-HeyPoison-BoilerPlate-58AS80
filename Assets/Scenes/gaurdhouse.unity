@@ -1486,6 +1486,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  matchLabel: 04-56iw
   input01: 0
   output01: 0
 --- !u!1 &977232134
@@ -1619,8 +1620,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aeea246ac8674e61a291b15dccc516f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SceneGraphComponent: {fileID: 0}
-  XGraph: {fileID: 0}
+  SceneGraphComponent: {fileID: 1041956573}
+  XGraph: {fileID: 933650068}
   NodeGOPrefab: {fileID: 1243868922860983273, guid: 7a971d189070b42439f3c1dbf1bf3e55,
     type: 3}
 --- !u!1001 &1053554071
@@ -2222,6 +2223,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  matchLabel: 03-9ifbg
   input01: 0
   output01: 0
 --- !u!1 &1286628131
@@ -2603,6 +2605,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  matchLabel: 00-38fh
   input01: 0
   output01: 0
 --- !u!1001 &1399249048
@@ -3317,6 +3320,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  matchLabel: 02-c9wj
   input01: 0
   output01: 0
 --- !u!1001 &1601778877
@@ -4687,6 +4691,7 @@ MonoBehaviour:
       _connectionType: 0
       _typeConstraint: 0
       _dynamic: 0
+  matchLabel: 01-3oigh
   input01: 0
   output01: 0
 --- !u!1 &2120866144
