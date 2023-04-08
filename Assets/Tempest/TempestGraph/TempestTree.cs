@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using Tempest;
 using Tempest.Trees;
-using Unity.VisualScripting;
 using UnityEngine;
-using Vector3 = System.Numerics.Vector3;
 
 //using UnityEngine; //DO NOT USE!!
 // using XNode; // Try not to use...
@@ -74,8 +72,6 @@ namespace Tempest
         //Ctor
         public TempestGraph() : base(null, null) { }
         public TempestGraph(List<XNode.Node> _ns, List<XEdge> _es) : base(_ns, _es) { }
-        
-        
     }
     
     public class TempestNode : Node, ITempestNode
@@ -86,7 +82,6 @@ namespace Tempest
         public TempestNode(List<XEdge> _xedg, TempestXNode _xNode) : base(_xedg)
         {
             XNode = _xNode;
-            handler = this;
             NodeAttributes = new TempestNodeAttributes();
             NodeAttributes.matchLabel = _xNode.name;
             NodeAttributes.edges = _xedg;
@@ -109,8 +104,6 @@ namespace Tempest
         //MonoScene Fields
         private TempestNodeMono NodeMono;
         
-        //Interface
-        private ITempestNode handler;
         
         //ITempestNode
         bool ITempestNode.IsValid()
@@ -123,8 +116,9 @@ namespace Tempest
         }
         void ITempestNode.Ingest_NodeMono(TempestNodeMono _nm)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
             NodeMono = _nm;
+            NodeMono.name = NodeAttributes.matchLabel;
             Debug.LogWarning("AdvisoryClear: NodeMono has been ingested");
         }
         
@@ -154,6 +148,7 @@ namespace Tempest
         public XNode.Node nodeA;
         public XNode.Node nodeB;
     }
+    
     public interface IGraphFuncs
     {
         //Define methods for deliverables here

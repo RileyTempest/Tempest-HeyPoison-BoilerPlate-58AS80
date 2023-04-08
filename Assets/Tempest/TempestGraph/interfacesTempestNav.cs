@@ -12,4 +12,10 @@ namespace Tempest
         //test
         void TestGraphPopulation();
     }
+    
+    //
+    public interface ITempestNodeMonoInit
+    {
+        void Set_TempestNodeField(TempestNode _tempestNode);
+    }
 }

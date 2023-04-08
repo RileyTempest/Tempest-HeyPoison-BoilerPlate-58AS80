@@ -27,22 +27,14 @@ namespace Tempest.Trees.Mono
         //Events/Subs
         public void InitSubscriptions()
         {
-           // TempestNavigationBuss.SetTransforms += Handler_PullTransformData;
-            TempestNavigationBuss.Regenerate += Handler_Regenerate;
-            //TempestNavigationBuss.CrawlPorts += Handler_CrawlPorts;
+           //TempestNavigationBuss.SetTransforms += Handler_PullTransformData;
+           //TempestNavigationBuss.Regenerate += Handler_Regenerate;
+           //TempestNavigationBuss.CrawlPorts += Handler_CrawlPorts;
         }
         
-        //Unity Messages
-        private void Awake()
-        {
-            //throw new NotImplementedException();
-        }
-        private void Update()
-        {
-            //throw new NotImplementedException();
-        }
+
         
-        //Helper
+        /*//Helper
         private void CountChildrenForGraphUpdate(ref Transform[] _nodegos)
         { 
             _nodegos = GetComponentsInChildren<Transform>();
@@ -114,7 +106,7 @@ namespace Tempest.Trees.Mono
                         /*if (nodey.payload.matchLabel == nodemono.Payload.matchLabel)
                         {
                             nodey.payload.worldPOS = nodemono.Payload.worldPOS;
-                        }*/
+                        }#1#
                     }
                 }
             }
@@ -217,6 +209,6 @@ namespace Tempest.Trees.Mono
                     
                 }
             }
-        }
+        }*/
     }
 }
