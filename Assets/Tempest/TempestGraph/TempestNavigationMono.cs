@@ -17,9 +17,9 @@ namespace Tempest.Trees.Mono
         [SerializeField] private NodeGraph GraphSO;
         [SerializeField] private static TempestSceneGraph TempestSceneGraphComp;
         [SerializeField] private static XNode.NodeGraph XGraph;
-        [SerializeField] protected Tempest.TempestGraph navigationGraph;
+        [SerializeField] protected Tempest.Trees.TempestGraph navigationTempestGraph;
 
-        private IGraphFuncs _graphFuncs => navigationGraph;
+        private ITempestGraph TempestGraph => navigationTempestGraph;
         private string portFieldName = "output01";
 
         //Event Handlers
@@ -29,7 +29,7 @@ namespace Tempest.Trees.Mono
             if (NodeGOPrefab == null) Debug.LogWarning("NodeGOPrefab is null. Populate with inspector");
             if (GraphSO == null) Debug.LogWarning("GraphSerializedObject is not set. Populate with inspector");
             
-            navigationGraph = new TempestGraph(); 
+            navigationTempestGraph = new TempestGraph(); 
             Debug.LogWarning("Navigation Graph is empty/default/ctor parameterless", this);
 
             TempestSceneGraphComp = gameObject.GetComponent<TempestSceneGraph>();
@@ -57,12 +57,11 @@ namespace Tempest.Trees.Mono
                 AcquireEdges());*/
             
             
-            
-            
             //running tests
-            navigationGraph = new TempestGraph(new List<XNode.Node>()
+            navigationTempestGraph = new TempestGraph(new List<TempestNode>()
             {
-                XGraph.nodes[0]
+                new TempestNode((IXNodeAttributes)XGraph.nodes[0]),
+                new TempestNode((IXNodeAttributes)XGraph.nodes[1])
             }, 
                 AcquireXEdgesFromSingleNode(XGraph.nodes[0], portFieldName)
                 );
@@ -86,21 +85,25 @@ namespace Tempest.Trees.Mono
             }
             foreach (KeyValuePair<string, TempestNode> _pair in GenerateNodeLookup(XGraph.nodes))
             {
-                GameObject newGO = Instantiate(NodeGOPrefab, 
-                    Vector3.zero, 
-                    Quaternion.identity.normalized, 
+                GameObject newGO = Instantiate(
+                    NodeGOPrefab, 
+                    ((TempestXNode)_pair.Value.XNode).Get_WorldPOS(),
+                    Quaternion.identity.normalized,
                     this.NodeParent.transform);
+                newGO.name = _pair.Key.ToString();
+                
+                //NodeGOPrefab,_v3, Quaternion.identity.normalized, this.NodeParent.transform
                 
                 TempestNodeMono _nodeMono = newGO.GetComponent<TempestNodeMono>();
-                ITempestNodeMonoInit tempestNodeMonoInit = _nodeMono;
+                ITempestNodeMono tempestNodeMono = _nodeMono;
                 
-                tempestNodeMonoInit.Set_TempestNodeField(_pair.Value);
+                tempestNodeMono.Set_TempestNodeField(_pair.Value);
             }
             
         }
         
         //Helpers - graph test
-        private List<TempestNode> AcquireNodes(XNode.SceneGraph _sceneGraph, IGraphFuncs _graphFuncs)
+        private List<TempestNode> AcquireNodes(XNode.SceneGraph _sceneGraph, ITempestGraph tempestGraph)
         {
             List<TempestNode> returnList = new List<TempestNode>();
             
@@ -112,9 +115,9 @@ namespace Tempest.Trees.Mono
             
             return returnList;
         }
-        private List<XEdge> AcquireEdges(IGraphFuncs _graphFuncs)
+        private List<Edge> AcquireEdges(ITempestGraph tempestGraph)
         {
-            List<XEdge> returnList = new List<XEdge>();
+            List<Edge> returnList = new List<Edge>();
             
             //crawl ports
             //etc...
@@ -128,22 +131,21 @@ namespace Tempest.Trees.Mono
             foreach (XNode.Node _n in _nodes)
             {
                 returnlist.Add(_n.name, 
-                    new TempestNode(AcquireXEdgesFromSingleNode(_n, portFieldName), 
-                        (TempestXNode)_n));
+                    new TempestNode((TempestXNode)_n));
             }
             
             return returnlist;
         }
-        private List<XEdge> AcquireXEdgesFromSingleNode(XNode.Node _node, string _outpuFieldName)
+        private List<Edge> AcquireXEdgesFromSingleNode(XNode.Node _node, string _outpuFieldName)
         {
-            List<XEdge> returnList = new List<XEdge>();
+            List<Edge> returnList = new List<Edge>();
 
             List<XNode.NodePort> portList = _node.GetOutputPort(_outpuFieldName).GetConnections();
             Dictionary<XNode.NodePort, XNode.Node> portLookup = new Dictionary<XNode.NodePort, XNode.Node>();
 
             foreach (NodePort _portal in portList)
             {
-                returnList.Add(new XEdge(_node, _portal.node));
+                returnList.Add(new Edge(_node, _portal.node));
             }
             
             return returnList;
@@ -183,14 +185,17 @@ namespace Tempest.Trees.Mono
      * slit'd, seg'men'urr'd.
      *
      *
+     * We've not to fear it
      * grapes, pitted cherries
-     * make a wine or syrup
-     * brinned. Mother too.
-     * when we're done they'll be
-     * easy to chew and take with
-     * open oats from dead eyes
+     * make a wine or syrup't
+     * brinned, with Mother too.
+     * when we're done
+     * they'll be
+     * easy to chew
+     * and make open
+     * oats from dead eyes
      * putrify! putrify! putrify!
-     * even Muscadines
+     * have even Muscadines
      * they all have something to remind...
      * ...infanticide. Hail Betrayer!
      * 

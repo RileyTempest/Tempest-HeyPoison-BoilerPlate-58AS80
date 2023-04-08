@@ -7,19 +7,22 @@ using UnityEditor;
 
 namespace Tempest
 {
-    
-    //
-    public class TempestNodeMono : TempestNavigationMono, ITempestNodeMonoInit
+    public class TempestNodeMono : MonoBehaviour, ITempestNodeMono
     {
         //Fields
         private TempestNode tempestNode;
         private ITempestNode ITempestNode => tempestNode;
 
         //Interfaces
-        void ITempestNodeMonoInit.Set_TempestNodeField(TempestNode _tempestNode)
+        void ITempestNodeMono.Set_TempestNodeField(TempestNode _tempestNode)
         {
             tempestNode = _tempestNode;
             ITempestNode.Ingest_NodeMono(this);
+            Debug.LogWarning("TempestNodeMono has ingested itself into TempestNode", this);
+        }
+        void ITempestNodeMono.Get_WorldPosition()
+        {
+            throw new NotImplementedException();
         }
     }
 }
