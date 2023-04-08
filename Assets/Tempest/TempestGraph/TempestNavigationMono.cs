@@ -12,25 +12,30 @@ namespace Tempest.Trees.Mono
     public class TempestNavigationMono : TempestNavigationBuss
     {
         //Fields
-        //[SerializeField] private XNode.SceneGraph SceneGraphComponent;
+        [SerializeField] private GameObject NodeGOPrefab;
+        [SerializeField] private Transform NodeParent;
+        [SerializeField] private NodeGraph GraphSO;
         [SerializeField] private static TempestSceneGraph TempestSceneGraphComp;
         [SerializeField] private static XNode.NodeGraph XGraph;
-        [SerializeField] private GameObject NodeGOPrefab;
         [SerializeField] protected Tempest.TempestGraph navigationGraph;
-        
+
         private IGraphFuncs _graphFuncs => navigationGraph;
         private string portFieldName = "output01";
 
         //Event Handlers
         private void InitNavMono()
         {
+            if (NodeParent == null) Debug.LogWarning("NodeParent is not set. Populate with inspector");
             if (NodeGOPrefab == null) Debug.LogWarning("NodeGOPrefab is null. Populate with inspector");
+            if (GraphSO == null) Debug.LogWarning("GraphSerializedObject is not set. Populate with inspector");
             
             navigationGraph = new TempestGraph(); 
             Debug.LogWarning("Navigation Graph is empty/default/ctor parameterless", this);
-            
+
             TempestSceneGraphComp = gameObject.GetComponent<TempestSceneGraph>();
+            TempestSceneGraphComp.graph = GraphSO;
             XGraph = TempestSceneGraphComp.graph;
+            
         }
         private void RegenerateTempestGraph() { }
 
@@ -68,21 +73,24 @@ namespace Tempest.Trees.Mono
             {
                 for (int i = 0; i < _pair.Value.NodeAttributes.edges.Count; i++)
                 {
-                    Debug.Log(_pair.Value.NodeAttributes.edges[i].nodeA + "<A B> " + _pair.Value.NodeAttributes.edges[i].nodeB);   
+                    //Debug.Log(_pair.Value.NodeAttributes.edges[i].nodeA + "<A B> " + _pair.Value.NodeAttributes.edges[i].nodeB);   
                 }
             }
             
-            /*//Instant TempestNodeMono
-            Transform[] transArray = this.transform.GetComponentsInChildren<Transform>();
-            for (int i = 0; i < ((transArray.Length) -1); i++)
+            //Instant TempestNodeMono
+            int children = NodeParent.transform.childCount;
+            for (int i = (children -1); i > -1; i--)
             {
-                Debug.Log(transArray[i].name);
-                GameObject.DestroyImmediate(transArray[i].gameObject);
-            }*/
-
+                Debug.Log(NodeParent.GetChild(i).name);
+                DestroyImmediate(NodeParent.GetChild(i).gameObject);
+            }
             foreach (KeyValuePair<string, TempestNode> _pair in GenerateNodeLookup(XGraph.nodes))
             {
-                GameObject newGO = Instantiate(NodeGOPrefab, this.transform);
+                GameObject newGO = Instantiate(NodeGOPrefab, 
+                    Vector3.zero, 
+                    Quaternion.identity.normalized, 
+                    this.NodeParent.transform);
+                
                 TempestNodeMono _nodeMono = newGO.GetComponent<TempestNodeMono>();
                 ITempestNodeMonoInit tempestNodeMonoInit = _nodeMono;
                 
