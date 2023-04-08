@@ -72,13 +72,13 @@ namespace Tempest.Trees.Mono
                 }
             }
             
-            //Instant TempestNodeMono
+            /*//Instant TempestNodeMono
             Transform[] transArray = this.transform.GetComponentsInChildren<Transform>();
             for (int i = 0; i < ((transArray.Length) -1); i++)
             {
                 Debug.Log(transArray[i].name);
                 GameObject.DestroyImmediate(transArray[i].gameObject);
-            }
+            }*/
 
             foreach (KeyValuePair<string, TempestNode> _pair in GenerateNodeLookup(XGraph.nodes))
             {
