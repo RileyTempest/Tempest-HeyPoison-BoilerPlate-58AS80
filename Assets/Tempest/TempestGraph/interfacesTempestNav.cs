@@ -36,4 +36,10 @@ namespace Tempest
         Vector3 Get_WorldPOS();
         List<Edge> Get_Edges();
     }
+
+    public interface ITempestSceneGraph
+    {
+        Dictionary<string, Vector3> NodeLabelLookup();
+        List<Edge> AcquireEdgesFromSingle(TempestXNode _xNode);
+    }
 }

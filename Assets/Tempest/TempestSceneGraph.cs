@@ -2,18 +2,47 @@ using System;
 using System.Collections.Generic;
 using Tempest;
 using Tempest.Trees;
+using Tempest.Trees.Mono;
+using Unity.VisualScripting;
 using UnityEngine;
 using XNode;
+using Edge = Tempest.Trees.Edge;
+using Node = XNode.Node;
 
 [Serializable]
-public class TempestSceneGraph : SceneGraph
+public class TempestSceneGraph : SceneGraph, ITempestSceneGraph
 {
     //Fields
     [SerializeField] private List<TempestXNode> TempestNodes;
-    [SerializeField] private NodeGraph NodeGraph;
+    [SerializeField] private static NodeGraph NodeGraph;
     [SerializeField] private static string OutputFieldName = "output01";
     
-    public static List<Edge> AcquireEdgesFromSingle(TempestXNode _xNode)
+    //Init
+    public static void temp_InitSeq()
+    {
+        //throw new NotImplementedException();
+
+        NodeGraph = GameObject.FindObjectOfType<TempestSceneGraph>().graph;
+    }
+
+    public static ITempestSceneGraph ITempest_SceneGraph
+    {
+        get
+        {
+            if (m_ITempest_SceneGraph == null)
+            {
+                m_ITempest_SceneGraph = FindObjectOfType<TempestSceneGraph>();
+            }
+
+            return m_ITempest_SceneGraph;
+        }
+    }
+    private static ITempestSceneGraph m_ITempest_SceneGraph;
+
+    public static List<Edge> AcquireEdgesFromSingle(TempestXNode _xNode) =>
+        ITempest_SceneGraph.AcquireEdgesFromSingle(_xNode);
+    
+    List<Edge> ITempestSceneGraph.AcquireEdgesFromSingle(TempestXNode _xNode)
     {
         List<Edge> returnList = new List<Edge>();
         
@@ -27,7 +56,19 @@ public class TempestSceneGraph : SceneGraph
         return returnList;
     }
     
-    
+    Dictionary<string, Vector3> ITempestSceneGraph.NodeLabelLookup()
+    {
+        Dictionary<string, Vector3> returnLookup = new Dictionary<string, Vector3>();
+
+        Debug.Log(NodeGraph);
+        foreach (TempestXNode _n in NodeGraph.nodes)
+        {
+            returnLookup.Add(((TempestXNode)_n).Get_MatchLabel(), Vector3.zero);
+            Debug.Log("NodeLabelLookup method " + _n.name);
+        }
+            
+        return returnLookup;
+    }
     
     
     

@@ -66,8 +66,6 @@ namespace Tempest.Trees
             //IngestNodeMono
         }
     }
-
-
     
     public interface ITempestGraph
     {
@@ -97,6 +95,10 @@ namespace Tempest.Trees
         public List<Tempest.Trees.Edge> edges;
     }
 
+    
+    
+    
+    
     /*****
      *
      *Its true, we need an outlet.

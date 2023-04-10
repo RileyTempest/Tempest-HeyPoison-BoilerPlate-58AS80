@@ -19,7 +19,8 @@ namespace Tempest.Trees.Mono
         [SerializeField] private static XNode.NodeGraph XGraph;
         [SerializeField] protected Tempest.Trees.TempestGraph navigationTempestGraph;
 
-        private ITempestGraph TempestGraph => navigationTempestGraph;
+        private ITempestGraph ITempestGraph => navigationTempestGraph;
+        private ITempestSceneGraph ITempest_SceneGraph => TempestSceneGraphComp;
         private string portFieldName = "output01";
 
         //Event Handlers
@@ -37,7 +38,32 @@ namespace Tempest.Trees.Mono
             XGraph = TempestSceneGraphComp.graph;
             
         }
-        private void RegenerateTempestGraph() { }
+
+        private void RegenerateTempestGraph()
+        {
+            //TODO:
+            Debug.Log("Entered TEmpestNavMono - RegenTempestGRaph");
+
+            //ITempest_SceneGraph.NodeLabelLookup();
+
+            Debug.Log("" + NodeParent.GetComponentsInChildren<TempestNodeMono>().Length);
+            
+            List<TempestNodeMono> nodelist = new List<TempestNodeMono>(); 
+            nodelist.AddRange(NodeParent.GetComponentsInChildren<TempestNodeMono>());
+            Debug.Log("nodechildren count" + nodelist.Count);
+            
+            foreach (KeyValuePair<string, Vector3> _pair in ITempest_SceneGraph.NodeLabelLookup())
+            {
+                //TODO: a predicate would be nice here. Nested for loops are dumb. 
+                foreach (TempestNodeMono _n in nodelist)
+                {
+                    if (_pair.Key == _n.name)
+                    {
+                        Debug.Log("labels match" + _pair.Key + " " + _n.name);
+                    }
+                }
+            }
+        }
 
         //Init
         public void InitSubscriptions()

@@ -30,10 +30,15 @@ public class MenuTest : MonoBehaviour
     [MenuItem("Tempest/Navigation/Regenerate TempestGraph")]
     public static void MenuHandler_RegenTempestGraph()
     {
+        Debug.Log("Regenerating...");
+        Debug.Log("TODO: Collect Transforms, Collect Xnodes. Set Xnode worldPOS from matching transforms. Cont Graph population per usge ");
         //throw new NotImplementedException();
         ITempestNavigationMenuHandlers handler = 
             FindObjectOfType<TempestSceneGraph>().
                 GetComponent<TempestNavigationBuss>();
+        
+        TempestSceneGraph.temp_InitSeq(); //TODO: review. temp for test. Do not do this plz
+        
         
         handler.RegenTempestGraph();
     }
