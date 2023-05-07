@@ -52,20 +52,34 @@ public class letsmove : MonoBehaviour
         //I'll need to make a navmesh later anyway. YAGNI for time - YAGNIN.
         
         teknogrl.transform.LookAt(targetNode);
-        //teknogrl.transform.position = slerpslerpslerp;
+        /*//teknogrl.transform.position = slerpslerpslerp;
 
         Vector3 nowPOS = teknogrl.transform.position;
-        Vector3 mouPOS = targetNode.transform.position;
+        Vector3 mouPOS = nowPOS - targetNode.transform.position;
         //nowmeowmemewoohwoovoodoo Dont worry its a prodigy song. 
 
         float dontforget = Time.deltaTime;
 
-        Vector3 mewnewv3 = Vector3.Slerp(nowPOS, mouPOS, dontforget);
+        Vector3 mewnewv3 = Vector3.Lerp(nowPOS, targetNode.transform.position, (dontforget * 0.4f));
 
-        teknogrl.transform.position = mewnewv3;
+        teknogrl.transform.position = mewnewv3;*/
+
+
+
+
+        Rigidbody tkrb = teknogrl.GetComponent<Rigidbody>();
+
+        Vector3 nowPOS = teknogrl.transform.position;
+        Vector3 tarPOS = targetNode.position;
+        Vector3 mouPOS = tarPOS - nowPOS;
+        
+        tkrb.MovePosition(mouPOS);
         
         //TODO: trigger proximity bump/collision. 
+        
+        Debug.Log("current target: " + targetNode.name);
 
+        
 
     }
     
