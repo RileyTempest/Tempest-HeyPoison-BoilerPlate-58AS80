@@ -9,10 +9,13 @@ public class MenuTest : MonoBehaviour
     
 
     // Add a menu item named "Do Something" to MyMenu in the menu bar.
-    [MenuItem("Tempest/Foobar")]
+    [MenuItem("Tempest/AIO")]
     static void DoSomething()
     {
-        Debug.Log("Tempest - MenuItem MenuTest - Foobar...");
+        Debug.Log("Tempest - All in One GraphSetup. Note, some inspector fields may need to be set again.");
+        MenuHandler_InitSystem();
+        MenuHandler_RegenTempestGraph();
+        MenuHandler_TestGraphPopulation();
     }
     
     //Menu Commands
@@ -46,7 +49,7 @@ public class MenuTest : MonoBehaviour
     
     
     //test
-    [MenuItem("Tempest/TestGraphPopulation")]
+    [MenuItem("Tempest/Navigation/TestGraphPopulation")]
     public static void MenuHandler_TestGraphPopulation()
     {
         //throw new NotImplementedException();
