@@ -89,6 +89,14 @@ public class letsmove : MonoBehaviour
         //Vector3.Scale(tarPOS, nowPOS);
         
         teknogrl.transform.position = Vector3.Lerp(nowPOS, tarPOS, (dontforget * 0.4f));
+
+
+        float diff = Vector3.Distance(teknogrl.transform.position, tarPOS);
+        if( (diff <= 0.5f) )
+        {
+            Debug.Log("limit reached, changing node target");
+            currentnodepointer++;
+        }
         
         //
         
