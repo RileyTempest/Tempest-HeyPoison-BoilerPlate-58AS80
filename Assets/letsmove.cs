@@ -84,28 +84,28 @@ public class letsmove : MonoBehaviour
         Vector3 nowPOS = teknogrl.transform.position;
         Vector3 tarPOS = targetNode.position;
         //Vector3 mouPOS = tarPOS - nowPOS;
-        Vector3 ewwPOS = nowPOS + tarPOS;
-            
-        //Vector3.Scale(tarPOS, nowPOS);
-        
-        teknogrl.transform.position = Vector3.Lerp(nowPOS, tarPOS, (dontforget * 0.4f));
+        //Vector3 ewwPOS = nowPOS + tarPOS;
+
+        teknogrl.transform.position = Vector3.Lerp(nowPOS, tarPOS, (dontforget * 0.9f));
+
 
 
         float diff = Vector3.Distance(teknogrl.transform.position, tarPOS);
-        if( (diff <= 0.5f) )
+        
+        if( (diff <= 0.5f) ) //kludge for edge detection/collision
         {
             Debug.Log("limit reached, changing node target");
-            currentnodepointer++;
+
+            if (currentnodepointer == (nodepatharray.Length - 1)) 
+            {
+                currentnodepointer = 0;
+            } else currentnodepointer++;
+            
+            //teknogrl.transform.LookAt(targetNode); odd rotation. IDK. 
+            Quaternion qube = Quaternion.FromToRotation(nowPOS, tarPOS);
+            teknogrl.transform.rotation = qube;
         }
         
-        //
-        
-        //Vector3 newpos = new Vector3(transform.position.x -2.5f, transform.position.y, transform.position.z);
-        
-        
-        //TODO: trigger proximity bump/collision. 
-        //Debug.Log("current target: " + targetNode.name);
-        //Debug.Log("");
     }
     
     //helpers

@@ -2285,8 +2285,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   teknogrl: {fileID: 1752050204}
   node1: {fileID: 1769511878}
-  node2: {fileID: 0}
-  node3: {fileID: 0}
+  node2: {fileID: 777605119}
+  node3: {fileID: 137457506}
   nodepatharray: 0000000001000000000000000200000001000000
   currentnodepointer: 0
 --- !u!1001 &1357996287
