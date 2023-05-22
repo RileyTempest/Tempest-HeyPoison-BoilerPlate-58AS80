@@ -31,10 +31,10 @@ public class MenuTest : MonoBehaviour
      * run and hide.
      * 
      */
-
-    // Add a menu item named "Do Something" to MyMenu in the menu bar.
-    [MenuItem("Tempest/AIO")]
-    static void DoSomething()
+    
+    //Menu Commands
+    [MenuItem("Tempest/Navigation-AIO-Init")]
+    static void NavigationAIOSequence()
     {
         Debug.Log("Tempest - All in One GraphSetup. Note, some inspector fields may need to be set again.");
         MenuHandler_InitSystem();
@@ -42,7 +42,36 @@ public class MenuTest : MonoBehaviour
         MenuHandler_TestGraphPopulation();
     }
     
-    //Menu Commands
+    //Debug Stuff
+    [MenuItem("Tempest/Debug/Navigation/Init-NodeLines")]
+    public static void MenuHandler_InitNodeLines()
+    {
+        //throw new NotImplementedException();
+
+        ITempestNikitaNode handler =
+            FindObjectOfType<NikitaNode>();
+        
+        Debug.Log("NodeLiens-test" + handler);
+            
+        handler.Debug_RefreshNodeLines();
+    }
+    
+    [MenuItem("Tempest/Debug/Navigation/Toggle-NodeLines-TODO")]
+    public static void MenuHandler_ToggleNodeLines()
+    {
+        throw new NotImplementedException();
+        
+        //TODO: simple way to just block rendering lines
+        
+        ITempestNavigationMenuHandlers handler = 
+            FindObjectOfType<NikitaNode>().
+                GetComponent<TempestNavigationBuss>();
+        
+        handler.InitNavigationSystem();
+    }
+
+
+    //Navigation System
     [MenuItem("Tempest/Navigation/Init NavSystem")]
     public static void MenuHandler_InitSystem()
     {
@@ -70,9 +99,6 @@ public class MenuTest : MonoBehaviour
         handler.RegenTempestGraph();
     }
     
-    
-    
-    //test
     [MenuItem("Tempest/Navigation/TestGraphPopulation")]
     public static void MenuHandler_TestGraphPopulation()
     {
@@ -80,6 +106,8 @@ public class MenuTest : MonoBehaviour
         ITempestNavigationMenuHandlers handler = GameObject.FindObjectOfType<TempestNavigationBuss>();
         handler.TestGraphPopulation();
     }
+    
+    //
     
 }
 
